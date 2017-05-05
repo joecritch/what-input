@@ -12,9 +12,6 @@ module.exports = (() => {
   // last used input intent
   let currentIntent = null
 
-  // form input types
-  const formInputs = ['input', 'select', 'textarea']
-
   // list of modifier keys commonly used with the mouse and
   // can be safely ignored to prevent false keyboard detection
   const ignoreMap = [
@@ -115,24 +112,12 @@ module.exports = (() => {
       if (value === 'pointer') value = pointerType(event)
 
       if (currentInput !== value || currentIntent !== value) {
-        let activeElem = document.activeElement
-        let activeInput = false
-
-        if (
-          activeElem &&
-          activeElem.nodeName &&
-          formInputs.indexOf(activeElem.nodeName.toLowerCase()) === -1
-        ) {
-          activeInput = true
-        }
-
         if (
           value === 'touch' ||
           // ignore mouse modifier keys
           value === 'mouse' ||
           // don't switch if the current element is a form input
           (value === 'keyboard' &&
-            activeInput &&
             ignoreMap.indexOf(eventKey) === -1)
         ) {
           // set the current and catch-all variable
